@@ -4,8 +4,6 @@ QueryGenie — Ask your database questions in plain English.
 Run:  streamlit run app.py
 """
 
-import os
-
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
@@ -17,9 +15,9 @@ load_dotenv()
 
 st.set_page_config(page_title="QueryGenie — Text to SQL", page_icon="🧞")
 
-# Build the sample database on first run so the app works instantly.
-if not os.path.exists(DB_PATH):
-    build()
+# Ensure the sample database exists and is seeded. build() is idempotent,
+# so this is safe to run on every app start (including on Streamlit Cloud).
+build()
 
 st.title("🧞 QueryGenie")
 st.caption("Ask questions in plain English — QueryGenie writes the SQL, runs it, and shows the answer.")
